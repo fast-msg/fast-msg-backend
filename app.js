@@ -20,11 +20,10 @@ app.use((req, res, next) => {
     next();
 });
 
-//rutas
-app.get('/',(req,res)=>{ 
-    res.sendFile(__dirname + '/public/index.html');
-});
+//cliente
+app.use(express.static('public'))
 
+//rutas
 app.use('/chat',routes_chat);
 
 module.exports = app;

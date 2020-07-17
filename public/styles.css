@@ -2,11 +2,31 @@ body {
     background-color: blanchedalmond;
 }
 
+#container {
+    width: 90%;
+    height: 400px;
+    margin: 0 auto;
+}
+
 #container-messages {
     background-color: #ccc;
     color: black;
     border: 2px solid black;
-    width: 90%;
-    min-height: 700vh;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+#send-message {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: stretch;
+}
+
+#send-message input {
+    flex-grow: 4;
+}
+
+#send-message button {
+    flex-grow: 1;
 }
