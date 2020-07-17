@@ -6,6 +6,32 @@ const port = 8080;
 //socket.io
 const options = { /* ... */ };
 const io = require('socket.io')(http, options);
+//mongoose
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/fastmsg',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    console.log("we are connected!")
+});
+
+//ejemplo
+var controllers = require('./app/controllers/users');
+/*
+controllers.addUser({name:'Emely García',
+email:'garciam.emm@gmail.com',password:'123456',
+status:1}); 
+
+controllers.addUser({name:'Roberto García',
+email:'roberto.emm@gmail.com',password:'123456',
+status:1}); 
+*/
+//---------------------------------------------------------------------------------------
 
 var users = [];
 
@@ -18,14 +44,14 @@ io.on('connection', (socket) => {
         var user = users.find((value) => value.nombre === msg.to);
         console.log(user)
         if (user) {
-            io.to(socket.id).emit('chat message',msg);
-            io.to(user.socketId).emit('chat message',msg);
+            io.to(socket.id).emit('chat message', msg);
+            io.to(user.socketId).emit('chat message', msg);
         }
     });
 
     socket.on('register', (username) => {
         addUser(username, socket.id);
-        io.to(socket.id).emit('chat message',{from:'Fast-Messages',to:username,mensaje:'Bienvenido '+username});
+        io.to(socket.id).emit('chat message', { from: 'Fast-Messages', to: username, mensaje: 'Bienvenido ' + username });
     });
 });
 

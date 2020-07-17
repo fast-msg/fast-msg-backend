@@ -1,0 +1,21 @@
+--usuario
+    -id X
+    -status X
+    -nombre X 
+    -email X
+    -password X
+    -contactos X
+        -id X
+    -chats
+        -id
+        -tipo
+        -participantes
+            -id
+        -mensajes
+            -id
+            -contenido
+            -fecha
+    -configuraciones
+        -tema
+        
+    
