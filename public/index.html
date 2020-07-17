@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast-Messages-be</title>
+    <style>
+        body {
+            background-color: blanchedalmond;
+        }
+
+        #container {
+            width: 90%;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        #container-messages {
+            background-color: #ccc;
+            color: black;
+            border: 2px solid black;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #send-message {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: stretch;
+        }
+
+        #send-message input {
+            flex-grow: 4;
+        }
+
+        #send-message button {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bienvenido a fast-messages :D </h1>
+    <div id="container">
+        <div id="container-messages">
+            <p>Mensaaaje</p>
+        </div>
+
+        <form id="send-message">
+            <input id="nombre" type="text" placeholder="Nombre..." />
+            <input id="mensaje" type="text" placeholder="Mensaje..." />
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            console.log("iniciando...")
+        })
+    </script>
+</body>
+
+</html>

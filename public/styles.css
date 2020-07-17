@@ -1,0 +1,12 @@
+body {
+    background-color: blanchedalmond;
+}
+
+#container-messages {
+    background-color: #ccc;
+    color: black;
+    border: 2px solid black;
+    width: 90%;
+    min-height: 700vh;
+    margin: 0 auto;
+}
