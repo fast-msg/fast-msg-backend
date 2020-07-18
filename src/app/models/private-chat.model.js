@@ -7,7 +7,9 @@ const Message = require('./message.model');
 var Schema = schema({
   type:Number,
   members:[String],
-  messages:[Message.schema]
+  messages:[Message.schema],
+  name:String,
+  image:String
 });
 
 //-----------type

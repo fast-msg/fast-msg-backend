@@ -1,6 +1,5 @@
 'use strict'
 var User = require('../models/user.model')
-var Chat = require('../models/chat.model')
 
 var controller = {
     addUser: async function (value) {
@@ -13,41 +12,41 @@ var controller = {
         }
         return null;
     },
-    addContactToUser:async function (value) {  
-        return await updateById(User,value.idUser,{$push:{'contacts':value.idContact}})
-        .then(document=>document)
-        .catch(error=>error);
-    },
-    addChat: async function (value) {
-        var chat = new Chat(value);
-        let document = await chat.save()
+    addContactToUser: async function (value) {
+        return await updateUserById(User, value.idUser, { $push: { 'contacts': value.idContact } })
             .then(document => document)
             .catch(error => error);
-        //agregar chat a lista de cada usuario
-        if (value && value.members) {
-            value.members.forEach(element => {
-                return updateById(User, element, { $push: { 'chats': document._id } })
-                    .then(document => document)
-                    .catch(error => error);
-            });
-        }
-        return document;
     },
-    addMessage: async function (chatId, value) {
-        //var chat = new chat(value);
-        //chat.save();
-    }
+   
 
+    getUser: async function (id) {
+        return await User.findById(id, 'name email image')
+            .then(document => document)
+            .catch(error => error);
+    },
+    getContactsOfUser: async function (id) {
+        var user = await User.findById(id, '_id contacts')
+            .then(document => document)
+            .catch(error => error);
+        //consultando contactos
+        return await User.find({ "_id": { "$in": user.contacts } }).select('_id name image')
+            .then(document => document)
+            .catch(error => error);
+    },
+    getInfoForChat:async function (id) {  
+        return await User.findById(id, 'image name')
+        .then(document => document)
+        .catch(error => error);
+    }
 }
 
 /**
- * Método que modifica cualquier documento
- * @param {*} MODEL Modelo del documento a modificar
+ * Método que modifica cualquier documento de la coleccion de usuarios
  * @param {*} id del documento a modificar
  * @param {*} values Nuevos valores que se modificarán en el document
  */
-async function updateById(MODEL, id, values) {
-    return await MODEL.findByIdAndUpdate(id, values)
+async function updateUserById(id, values) {
+    return await User.findByIdAndUpdate(id, values)
         .then(document => document)
         .catch(error => error);
 }
