@@ -13,7 +13,8 @@ var controller = {
         return null;
     },
     addContactToUser: async function (value) {
-        return await updateUserById(User, value.idUser, { $push: { 'contacts': value.idContact } })
+        console.log(value)
+        return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
             .then(document => document)
             .catch(error => error);
     },
@@ -37,7 +38,8 @@ var controller = {
         return await User.findById(id, 'image name')
         .then(document => document)
         .catch(error => error);
-    }
+    },
+    updateUser:updateUserById
 }
 
 /**

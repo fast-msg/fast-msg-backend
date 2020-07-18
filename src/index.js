@@ -8,7 +8,7 @@ const options = { /* ... */ };
 const io = require('socket.io')(http, options);
 //mongoose
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fastmsg',
+mongoose.connect('mongodb://localhost/fastMessages',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -22,41 +22,64 @@ db.once('open', function () {
 });
 
 //ejemplo
-var controllers = require('./app/controllers/users');
+var func_users = require('./app/controllers/users');
+var func_chats = require('./app/controllers/chats');
 
 
 async function test() {
 
-    var user1 = await controllers.addUser({
+    var user1 = await func_users.addUser({
         name: 'Emely García',
         email: 'garciam.emm@gmail.com', password: '123456',
         status: 1,
         image:'photo'
     });
 
-    var user2 = await controllers.addUser({
+    var user2 = await func_users.addUser({
         name: 'Roberto García',
         email: 'roberto.emm@gmail.com', password: '123456',
         status: 1,
         image:'photo'
     });
-    //console.log(user1._id, user2._id)
-
+    console.log(user1._id, user2._id)
+ 
     if(user1 && user2 ){
-        var chat = await controllers.addChat({
-            type: 0,
-            members: [user1._id, user2._id],
-            image:'photo',
-            name:'chat 1'
+       var chatp = await func_chats.addPrivateChat({
+            from:user1._id, 
+            to:user2._id
         })
-        //console.log(chat)
+        
+        var chatg = await func_chats.addGroupChat({
+            members:[user1._id],
+            image:'photo',
+            name:'chat 2'
+        })
+
+        var chatg = await func_chats.addGroupChat({
+            members:[user1._id],
+            image:'photo',
+            name:'chat 4'
+        })
+
+        var chatl = await func_chats.addLiveChat({
+            members:[user1._id],
+            image:'photo',
+            name:'chat 3',
+            startDate:new Date()
+        })
+        var chatl = await func_chats.addLiveChat({
+            members:[user1._id],
+            image:'photo',
+            name:'chat 5',
+            startDate:new Date()
+        })
     }
 
 }
-test();
+//test();
 
-//controllers.addContactToUser({idUser:'5f123fc118ef2f5ea2400e83',idContact:'5f123fc118ef2f5ea2400e84'})
-//controllers.addContactToUser({idUser:'5f123fc118ef2f5ea2400e84',idContact:'5f123fc118ef2f5ea2400e83'})
+//func_users.addContactToUser({idUser:'5f125a0a11ae085be264a4be',idContact:'5f125a0a11ae085be264a4bf'})
+//func_users.addContactToUser({idUser:'5f125a0a11ae085be264a4bf',idContact:'5f125a0a11ae085be264a4be'})
 
 
 test2();
