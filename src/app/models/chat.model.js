@@ -1,12 +1,13 @@
 'use strict'
 const mongoose = require('mongoose')
 const schema = mongoose.Schema;
-var Message = require('./message.model');
+
+const Message = require('./message.model');
 
 var Schema = schema({
   type:Number,
-  members:[Number],
-  messages:[Message]
+  members:[String],
+  messages:[Message.schema]
 });
 
 //-----------type

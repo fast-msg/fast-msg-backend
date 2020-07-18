@@ -7,8 +7,8 @@ var Schema = schema({
     email:String,
     password:String,
     status:Number,
-    contacts:[Number],
-    chats:[Number],
+    contacts:[String],
+    chats:[String],
     settings:{
         theme:String
     }

@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost/fastmsg',
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useNewUrlParser: true,
+        useFindAndModify: false
     });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -22,15 +23,37 @@ db.once('open', function () {
 
 //ejemplo
 var controllers = require('./app/controllers/users');
-/*
-controllers.addUser({name:'Emely García',
-email:'garciam.emm@gmail.com',password:'123456',
-status:1}); 
 
-controllers.addUser({name:'Roberto García',
-email:'roberto.emm@gmail.com',password:'123456',
-status:1}); 
-*/
+
+async function test() {
+
+    var user1 = await controllers.addUser({
+        name: 'Emely García',
+        email: 'garciam.emm@gmail.com', password: '123456',
+        status: 1
+    });
+
+    var user2 = await controllers.addUser({
+        name: 'Roberto García',
+        email: 'roberto.emm@gmail.com', password: '123456',
+        status: 1
+    });
+    //console.log(user1._id, user2._id)
+
+    if(user1 && user2 ){
+        var chat = await controllers.addChat({
+            type: 0,
+            members: [user1._id, user2._id]
+        })
+        //console.log(chat)
+    }
+
+}
+//controllers.addContactToUser({idUser:'5f123fc118ef2f5ea2400e83',idContact:'5f123fc118ef2f5ea2400e84'})
+//controllers.addContactToUser({idUser:'5f123fc118ef2f5ea2400e84',idContact:'5f123fc118ef2f5ea2400e83'})
+
+//test();
+
 //---------------------------------------------------------------------------------------
 
 var users = [];
