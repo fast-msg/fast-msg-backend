@@ -7,18 +7,14 @@ var controller = {
         var document = await user.save()
             .then(document => document)
             .catch(error => error);
-        if (document) {
-            return document;
-        }
-        return null;
+        return document;
     },
     addContactToUser: async function (value) {
-        console.log(value)
         return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
             .then(document => document)
             .catch(error => error);
     },
-   
+
 
     getUser: async function (id) {
         return await User.findById(id, 'name email image')
@@ -30,16 +26,27 @@ var controller = {
             .then(document => document)
             .catch(error => error);
         //consultando contactos
-        return await User.find({ "_id": { "$in": user.contacts } }).select('_id name image')
+        if (user) {
+            return await User.find({ "_id": { "$in": user.contacts } }).select('_id name image')
+                .then(document => document)
+                .catch(error => error);
+        }
+    },
+    getInfoForChat: async function (id) {
+        return await User.findById(id, 'image name')
             .then(document => document)
             .catch(error => error);
     },
-    getInfoForChat:async function (id) {  
-        return await User.findById(id, 'image name')
-        .then(document => document)
-        .catch(error => error);
+    getChatsIdOfUser: async function (id) {
+        var user = await User.findById(id, 'chats')
+            .then(document => document)
+            .catch(error => error);
+        if (user) {
+            return user.chats;
+        }
     },
-    updateUser:updateUserById
+
+    updateUser: updateUserById
 }
 
 /**

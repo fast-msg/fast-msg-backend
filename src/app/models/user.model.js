@@ -9,8 +9,7 @@ var Schema = schema({
     status:Number,
     image:String,
     contacts:[String],
-    privateChats:[String],
-    groupChats:[String],
+    chats:[String],
     settings:{
         theme:String
     }

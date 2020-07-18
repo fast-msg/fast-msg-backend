@@ -85,9 +85,9 @@ async function test() {
 test2();
 
 async function test2(){
-   // console.log(await controllers.getUser('5f123fc118ef2f5ea2400e83'));
-   //console.log(await controllers.getContactsOfUser('5f123fc118ef2f5ea2400e83'));
-
+   //console.log(await func_users.getUser('5f125a0a11ae085be264a4be'));
+   //console.log(await func_users.getContactsOfUser('5f125a0a11ae085be264a4be'));
+    //console.log(await func_chats.getChatsOfUser('5f13218c8cb953232d4c4af0'))
 }
 
 //---------------------------------------------------------------------------------------

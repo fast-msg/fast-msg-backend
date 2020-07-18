@@ -14,7 +14,7 @@ var controller = {
         //agregar chat a lista de cada usuario
         if (value && value.members) {
             value.members.forEach(element => {
-                return func_users.updateUser(element, { $push: { 'groupChats': document._id } })
+                func_users.updateUser(element, { $push: { 'chats': document._id } })
                     .then(document => document)
                     .catch(error => error);
             });
@@ -23,10 +23,20 @@ var controller = {
     },
     addPrivateChat: async function (value) {
         var info = await func_users.getInfoForChat(value.to);
-        value['image']=info.image;
-        value['name']=info.name;
+        value['image'] = info.image;
+        value['name'] = info.name;
         var chat = new PrivateChat(value);
         let document = await chat.save()
+            .then(document => document)
+            .catch(error => error);
+
+        //agregar chat a usuarios
+        //from
+        func_users.updateUser(value.from, { $push: { 'chats': document._id } })
+            .then(document => document)
+            .catch(error => error);
+        //to
+        func_users.updateUser(value.to, { $push: { 'chats': document._id } })
             .then(document => document)
             .catch(error => error);
         return document;
@@ -39,17 +49,20 @@ var controller = {
         return document;
     },
 
-    getPrivateChatsOfUser: async function (id) {
-        var user = await User.findById(id, '_id chats')
-            .then(document => document)
-            .catch(error => error);
-
-        //consultando chats 
-        return await User.find({ "_id": { "$in": user.contacts } }).select('_id name ')
-            .then(document => document)
-            .catch(error => error);
-
-
+    getChatsOfUser: async function (id) {
+        var chats = await func_users.getChatsIdOfUser(id);
+        if (chats) {
+            //consultando chats
+            //chats privados 
+            let res = await PrivateChat.find({ "_id": { "$in": chats } }).select('_id name image ')
+                .then(document => document)
+                .catch(error => error);
+            //chats grupales
+            let res2 = await GroupChat.find({ "_id": { "$in": chats } }).select('_id name image ')
+                .then(document => document)
+                .catch(error => error);
+            return res.concat(res2)
+        }
     }
 }
 
