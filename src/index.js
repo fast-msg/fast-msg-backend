@@ -22,9 +22,8 @@ db.once('open', function () {
 });
 
 //ejemplo
-//var func_users = require('./app/controllers/users');
+var func_users = require('./app/controllers/database-actions/chats');
 //var func_chats = require('./app/controllers/chats');
-
 
 async function test() {
 
@@ -82,9 +81,10 @@ async function test() {
 //func_users.addContactToUser({idUser:'5f125a0a11ae085be264a4bf',idContact:'5f125a0a11ae085be264a4be'})
 
 
-//test2();
+test2();
 
 async function test2(){
+
    //console.log(await func_users.getUser('5f125a0a11ae085be264a4be'));
    //console.log(await func_users.getContactsOfUser('5f125a0a11ae085be264a4be'));
    // console.log(await func_users.getChatsOfUser('5f13218c8cb953232d4c4af0'))

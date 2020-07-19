@@ -3,7 +3,7 @@ var PrivateChat = require('../../models/chats/private-chat.model')
 var GroupChat = require('../../models/chats/group-chat.model')
 var LiveChat = require('../../models/chats/live-chat.model')
 
-var func_users = require('./users')
+var func_users = require('../database-actions/users')
 
 var actions = {
     addGroupChat: async function (value) {
@@ -32,11 +32,11 @@ var actions = {
 
         //agregar chat a usuarios
         //from
-        func_users.updateUser(value.from, { $push: { 'chats': document._id } })
+        await func_users.updateUser(value.from, { $push: { 'chats': document._id } })
             .then(document => document)
             .catch(error => error);
         //to
-        func_users.updateUser(value.to, { $push: { 'chats': document._id } })
+        await func_users.updateUser(value.to, { $push: { 'chats': document._id } })
             .then(document => document)
             .catch(error => error);
         return document;
@@ -48,7 +48,9 @@ var actions = {
             .catch(error => error);
         return document;
     },
-
+    getall:function (param) {  
+        return "ola"
+    },
     getListChat: async function (chatsIds) {
         //consultando chats
         //chats privados 
@@ -59,7 +61,7 @@ var actions = {
         let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } }).select('_id name image ')
             .then(document => document)
             .catch(error => error);
-        return res.concat(res2)
+        return res.concat(res2);
     }
 }
 
