@@ -1,6 +1,5 @@
 'use strict'
 var User = require('../../models/user.model')
-var functions_chat = require('../database-actions/chats')
 
 var actions = {
     addUser: async function (value) {
@@ -42,7 +41,7 @@ var actions = {
         return await User.findById(id, 'chats')
             .then(document => document.chats)
             .catch(error => error);
-     },
+    },
     updateUser: updateUserById
 }
 

@@ -3,6 +3,7 @@ const express = require('express');
 var router = express.Router();
 
 const controller = require('../controllers/users')
+
 /**
  * Información del usuario
  * Parámetros:
@@ -23,8 +24,5 @@ router.get('/contacts',controller.getContacts);
  *      id: del usuario
  */
 router.put('/contacts/add',controller.addContact);
-
-
-
 
 module.exports = router;

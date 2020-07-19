@@ -9,6 +9,6 @@ const controller = require('../controllers/chat')
  * Parámetros:
  *      id: del usuario
  */
-router.get('/chats',controller.getChats);
+router.get('/user',controller.getChats);
 
 module.exports = router;

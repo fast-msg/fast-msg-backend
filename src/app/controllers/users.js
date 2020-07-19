@@ -29,20 +29,6 @@ var controller = {
             res.status(500).send();
         }
     },
-    getChats: async function (req, res) {
-        try {
-            var id = req.query.id;
-            var response = await actions_users.getChatsOfUser(id);
-            if (response) {
-                res.status(200).send(response);
-            } else {
-                res.status(404).send();
-            }
-        } catch (e) {
-            console.log(e)
-            res.status(500).send();
-        }
-    },
 
     addContact: async function (req, res) {
         try {
