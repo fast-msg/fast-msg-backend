@@ -2,10 +2,13 @@
 const express = require('express');
 var router = express.Router();
 
-const controller = require('../controllers/database-actions/chats')
+const controller = require('../controllers/chat')
 
-//router.get('/contacts',controller.save);
-//router.post('/',controller.save);
-
+/**
+ * Chats del usuario
+ * Parámetros:
+ *      id: del usuario
+ */
+router.get('/chats',controller.getChats);
 
 module.exports = router;

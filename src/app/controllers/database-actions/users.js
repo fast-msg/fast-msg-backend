@@ -38,18 +38,11 @@ var actions = {
             .then(document => document)
             .catch(error => error);
     },
-    getChatsOfUser: async function (id) {
-        var chats = await User.findById(id, 'chats')
-            .then(document => document)
+    getChatsIdOfUser:async function (id) { 
+        return await User.findById(id, 'chats')
+            .then(document => document.chats)
             .catch(error => error);
-        if (chats) {
-            console.log(functions_chat.getall(id))
-            /*
-            return await func_chats.getListChat(chats)
-            .then(document => document)
-            .catch(error => error);*/
-        }
-    },
+     },
     updateUser: updateUserById
 }
 

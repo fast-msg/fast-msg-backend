@@ -26,12 +26,5 @@ router.put('/contacts/add',controller.addContact);
 
 
 
-/**
- * Chats del usuario
- * Parámetros:
- *      id: del usuario
- */
-router.get('/chats',controller.getChats);
-
 
 module.exports = router;

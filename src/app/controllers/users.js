@@ -44,20 +44,21 @@ var controller = {
         }
     },
 
-    addContact:async function (req,res) {  
+    addContact: async function (req, res) {
         try {
-        var body = req.body;
-        console.log(body)
-        var response = await actions_users.addContactToUser(body);
-        if (response) {
-            res.status(200).send(response);
-        } else {
-            res.status(404).send();
+            var body = req.body;
+            console.log(body)
+            var response = await actions_users.addContactToUser(body);
+            if (response) {
+                res.status(200).send(response);
+            } else {
+                res.status(404).send();
+            }
+        } catch (e) {
+            console.log(e)
+            res.status(500).send();
         }
-    } catch (e) {
-        console.log(e)
-        res.status(500).send();
-    } }
+    }
 };
 
 module.exports = controller;
