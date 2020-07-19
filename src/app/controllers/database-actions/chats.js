@@ -1,11 +1,11 @@
 'use strict'
-var PrivateChat = require('../models/chats/private-chat.model')
-var GroupChat = require('../models/chats/group-chat.model')
-var LiveChat = require('../models/chats/live-chat.model')
+var PrivateChat = require('../../models/chats/private-chat.model')
+var GroupChat = require('../../models/chats/group-chat.model')
+var LiveChat = require('../../models/chats/live-chat.model')
 
 var func_users = require('./users')
 
-var controller = {
+var actions = {
     addGroupChat: async function (value) {
         var chat = new GroupChat(value);
         let document = await chat.save()
@@ -63,4 +63,4 @@ var controller = {
     }
 }
 
-module.exports = controller;
+module.exports = actions;

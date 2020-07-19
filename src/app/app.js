@@ -5,6 +5,7 @@ var app = express();
 
 //archivos de rutas 
 var routes_chat = require('./routes/chat')
+var routes_users = require('./routes/users')
 
 //middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 app.use(express.static('public'))
 
 //rutas
+app.use('/user',routes_users);
 app.use('/chat',routes_chat);
 
 module.exports = app;
