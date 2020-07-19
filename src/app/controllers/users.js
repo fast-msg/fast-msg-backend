@@ -1,5 +1,7 @@
 'use strict'
 var User = require('../models/user.model')
+var func_chats = require('./chats')
+
 
 var controller = {
     addUser: async function (value) {
@@ -37,15 +39,14 @@ var controller = {
             .then(document => document)
             .catch(error => error);
     },
-    getChatsIdOfUser: async function (id) {
-        var user = await User.findById(id, 'chats')
+    getChatsOfUser: async function (id) {
+        var chats = await User.findById(id, 'chats')
             .then(document => document)
             .catch(error => error);
-        if (user) {
-            return user.chats;
+        if (chats) {
+            return await func_chats.getListChat(chats);
         }
     },
-
     updateUser: updateUserById
 }
 

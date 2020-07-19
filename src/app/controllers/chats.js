@@ -49,20 +49,17 @@ var controller = {
         return document;
     },
 
-    getChatsOfUser: async function (id) {
-        var chats = await func_users.getChatsIdOfUser(id);
-        if (chats) {
-            //consultando chats
-            //chats privados 
-            let res = await PrivateChat.find({ "_id": { "$in": chats } }).select('_id name image ')
-                .then(document => document)
-                .catch(error => error);
-            //chats grupales
-            let res2 = await GroupChat.find({ "_id": { "$in": chats } }).select('_id name image ')
-                .then(document => document)
-                .catch(error => error);
-            return res.concat(res2)
-        }
+    getListChat: async function (chatsIds) {
+        //consultando chats
+        //chats privados 
+        let res = await PrivateChat.find({ "_id": { "$in": chatsIds } }).select('_id name image ')
+            .then(document => document)
+            .catch(error => error);
+        //chats grupales
+        let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } }).select('_id name image ')
+            .then(document => document)
+            .catch(error => error);
+        return res.concat(res2)
     }
 }
 

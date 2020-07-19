@@ -87,7 +87,7 @@ test2();
 async function test2(){
    //console.log(await func_users.getUser('5f125a0a11ae085be264a4be'));
    //console.log(await func_users.getContactsOfUser('5f125a0a11ae085be264a4be'));
-    //console.log(await func_chats.getChatsOfUser('5f13218c8cb953232d4c4af0'))
+    console.log(await func_users.getChatsOfUser('5f13218c8cb953232d4c4af0'))
 }
 
 //---------------------------------------------------------------------------------------
