@@ -44,6 +44,22 @@ var controller = {
             console.log(e)
             res.status(500).send();
         }
+    },
+
+    editUser:async function (req,res){
+        try {
+            var id = req.query.id
+            var body = req.body;
+            var response = await actions_users.updateUser(id,body);
+            if (response) {
+                res.status(200).send();
+            } else {
+                res.status(404).send();
+            }
+        } catch (e) {
+            console.log(e)
+            res.status(500).send();
+        } 
     }
 };
 

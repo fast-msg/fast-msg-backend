@@ -10,7 +10,11 @@ const controller = require('../controllers/users')
  *      id: del usuario
  */
 router.get('/',controller.getUser);
-
+/**
+ * Modificar info del usuario
+ * Body: id,name,image,email
+ */
+router.put('/',controller.editUser);
 
 /**
  * Contactos del usuario

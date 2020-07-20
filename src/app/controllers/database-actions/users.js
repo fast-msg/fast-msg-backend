@@ -15,7 +15,6 @@ var actions = {
             .catch(error => error);
     },
 
-
     getUser: async function (id) {
         return await User.findById(id, 'name email image')
             .then(document => document)
