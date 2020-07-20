@@ -1,11 +1,11 @@
-var actions = require('./database-actions/chats');
+var actions_user = require('./database-actions/chats');
 
 var controller = {
     addGroupChat: async function (req, res) {
         try {
            var body = req.body;
             console.log(body)
-            var response = await actions.addGroupChat(body);
+            var response = await actions_user.addGroupChat(body);
             if (response) {
                 res.status(200).send(response);
             } else {
@@ -19,7 +19,7 @@ var controller = {
     getChats: async function (req, res) {
         try {
             var id = req.query.id;
-            var response = await actions_chats.getChatsOfUser(id);
+            var response = await actions_user.getChatsOfUser(id);
             if (response) {
                 res.status(200).send(response);
             } else {
