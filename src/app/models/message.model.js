@@ -7,4 +7,7 @@ var Schema = schema({
     date: Date,
     owner:String
 });  
+
+Schema.virtual('id').get(function() { return this._id; });
+
 module.exports = mongoose.model('Message', Schema);

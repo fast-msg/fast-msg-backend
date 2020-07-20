@@ -12,4 +12,6 @@ var Schema = schema({
   messages:[Message.schema]
 });
 
+Schema.virtual('id').get(function() { return this._id; });
+
 module.exports = mongoose.model('PrivateChat',Schema);

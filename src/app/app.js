@@ -21,8 +21,8 @@ app.use((req, res, next) => {
     next();
 });
 
-//cliente
-app.use(express.static('public'))
+//servicio de archivos estaticos 
+app.use('/static', express.static(__dirname + '/uploads'));
 
 //rutas
 app.use('/user',routes_users);

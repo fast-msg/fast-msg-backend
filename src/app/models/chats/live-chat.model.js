@@ -10,4 +10,6 @@ var Schema = schema({
   finishDate:Date
 });
 
+Schema.virtual('id').get(function() { return this._id; });
+
 module.exports = mongoose.model('LiveChat',Schema);
