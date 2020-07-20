@@ -48,21 +48,33 @@ var actions = {
             .catch(error => error);
         return document;
     },
-    getChatsOfUser: async function (id) {
-        var chatsIds = await func_users.getChatsIdOfUser(id);
+    getChatsOfUser: async function (id_user) {
+        var chatsIds = await func_users.getChatsIdOfUser(id_user);
         if (chatsIds) {
             let res = await PrivateChat.find({ "_id": { "$in": chatsIds } })
-            .select('_id name image ')
+                .select('_id name image ')
                 .then(document => document)
                 .catch(error => error);
             //chats grupales
             let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } })
-            .select('_id name image')
+                .select('_id name image')
                 .then(document => document)
                 .catch(error => error);
             return res.concat(res2);
         }
     },
+    getChat: async function (id_chat) {
+        //buscar chat en privates
+        let chat = await PrivateChat.findById(id_chat)
+            .then(document => document)
+            .catch(error => error);
+        if (!chat) {
+            chat = await GroupChat.findById(id_chat)
+                .then(document => document)
+                .catch(error => error);
+        }
+        return chat;
+    }
 }
 
 module.exports = actions;
