@@ -1,8 +1,15 @@
 'use strict'
 const express = require('express');
 var router = express.Router();
-
+//multipart para uploads 
+const multipart = require('connect-multiparty');
+var multiparMiddle = multipart({uploadDir:'uploads'})
 const controller = require('../controllers/users')
+
+/**
+ * Subir Imagen de perfil
+ *  */ 
+router.post('/upload-image',multiparMiddle,controller.uploadImage);
 
 /**
  * Información del usuario
