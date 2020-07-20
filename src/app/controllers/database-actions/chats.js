@@ -51,11 +51,13 @@ var actions = {
     getChatsOfUser: async function (id) {
         var chatsIds = await func_users.getChatsIdOfUser(id);
         if (chatsIds) {
-            let res = await PrivateChat.find({ "_id": { "$in": chatsIds } }).select('_id name image ')
+            let res = await PrivateChat.find({ "_id": { "$in": chatsIds } })
+            .select('_id name image ')
                 .then(document => document)
                 .catch(error => error);
             //chats grupales
-            let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } }).select('_id name image ')
+            let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } })
+            .select('_id name image')
                 .then(document => document)
                 .catch(error => error);
             return res.concat(res2);
