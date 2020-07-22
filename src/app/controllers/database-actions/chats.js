@@ -2,10 +2,13 @@
 var PrivateChat = require('../../models/chats/private-chat.model')
 var GroupChat = require('../../models/chats/group-chat.model')
 var LiveChat = require('../../models/chats/live-chat.model')
-
+var Message = require('../../models/message.model')
 var func_users = require('../database-actions/users')
 
 var actions = {
+  sayHelloo:function () {
+    console.log("hola")
+  },
     addGroupChat: async function (value) {
         var chat = new GroupChat(value);
         let document = await chat.save()
@@ -74,6 +77,37 @@ var actions = {
                 .catch(error => error);
         }
         return chat;
+    },
+
+    addMesageChat:async function(owner,id_chat,content,date){
+      let chat = await PrivateChat.findById(id_chat)
+          .then(document => document)
+          .catch(error => error);
+      if (!chat) {
+          chat = await GroupChat.findById(id_chat)
+              .then(document => document)
+              .catch(error => error);
+      }
+
+      let msg = new Message({owner,content,date})
+      chat.messages.push(msg)
+      await chat.save()
+      .then(element=>element)
+      .catch(error=>error);
+      return msg;
+    },
+    getMembersOfChat:async function(id_chat){
+      let chat = await PrivateChat.findById(id_chat)
+          .then(document => document)
+          .catch(error => error);
+      if (chat) {
+        return [chat.from,chat.to];
+      }else{
+        chat = await GroupChat.findById(id_chat)
+            .then(document => document)
+            .catch(error => error);
+            return chat.members;
+      }
     }
 }
 

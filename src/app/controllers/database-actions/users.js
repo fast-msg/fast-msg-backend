@@ -36,7 +36,7 @@ var actions = {
             .then(document => document)
             .catch(error => error);
     },
-    getChatsIdOfUser:async function (id) { 
+    getChatsIdOfUser:async function (id) {
         return await User.findById(id, 'chats')
             .then(document => document.chats)
             .catch(error => error);
