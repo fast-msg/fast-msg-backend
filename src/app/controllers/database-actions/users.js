@@ -2,13 +2,6 @@
 var User = require('../../models/user.model')
 
 var actions = {
-    addUser: async function (value) {
-        var user = new User(value);
-        var document = await user.save()
-            .then(document => document)
-            .catch(error => error);
-        return document;
-    },
     addContactToUser: async function (value) {
         return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
             .then(document => document)

@@ -6,6 +6,7 @@ var app = express();
 //archivos de rutas 
 var routes_chat = require('./routes/chat')
 var routes_users = require('./routes/users')
+var routes_public = require('./routes/public')
 
 //middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -27,5 +28,6 @@ app.use('/static', express.static(__dirname + '/uploads'));
 //rutas
 app.use('/user',routes_users);
 app.use('/chat',routes_chat);
+app.use('/public',routes_public);
 
 module.exports = app;
