@@ -17,6 +17,11 @@ var actions = {
       throw Error('El correo electrónico ya está registrado');
     }
   },
+  getUserByEmail: async function (email) {
+    return await User.find({email}).select('password').exec()
+        .then(document => document)
+        .catch(error => error);
+},
 }
 
 module.exports = actions;
