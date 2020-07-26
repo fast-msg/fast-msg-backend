@@ -2,23 +2,24 @@
 const express = require('express');
 var router =express.Router();
 var controller = require('./../controllers/public')
+var {catchErrors} = require('../middlewares/handleErrors');
 
 /**
 * Registro de usuarios
 *
 */
-router.post('/register',controller.register);
+router.post('/register',catchErrors(controller.register));
 
 /**
 * Inicio de sesión de usuario
 *
 */
-router.post('/login',controller.login);
+router.post('/login',catchErrors(controller.login));
 
 /**
 * Envío de mensaje a administradores
 *
 */
-router.post('/contact',controller.contact);
+router.post('/contact',catchErrors(controller.contact));
 
 module.exports = router;

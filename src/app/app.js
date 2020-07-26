@@ -1,7 +1,8 @@
 'use strict'
 var express = require('express');
-var bodyParser = require('body-parser');
 var app = express();
+var bodyParser = require('body-parser');
+var {handleErrorsExpress} = require('./middlewares/handleErrors');
 
 //archivos de rutas 
 var routes_chat = require('./routes/chat')
@@ -29,11 +30,8 @@ app.use('/static', express.static(__dirname + '/uploads'));
 app.use('/user',routes_users);
 app.use('/chat',routes_chat);
 app.use('/public',routes_public);
+
 //manejo de errores
-app.use(function(err, req, res, next) {
-    // logic
-    console.error(err.stack);
-    next(err);
-  });
+app.use(handleErrorsExpress);
   
 module.exports = app;

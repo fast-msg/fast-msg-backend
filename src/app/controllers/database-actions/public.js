@@ -8,19 +8,16 @@ var actions = {
       user = new User(value);
       user.image ="image"; //imagen por defecto
       user.status = 3; //cuenta congelada
+      //generar hash y asignar a cuentas por confirmar
       let res = await user.save()
-        .then(document => document)
-        .catch(error => error);
       return res;
     }
     else {
-      return new Error('El correo electrónico ya está registrado');
+      throw new Error('El correo electrónico ya está registrado');
     }
   },
   getUserByEmail: async function (email) {
-    return await User.find({email}).select('password').exec()
-        .then(document => document)
-        .catch(error => error);
+    return await User.find({email}).select('password').exec();
 },
 }
 
