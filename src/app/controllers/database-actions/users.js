@@ -4,35 +4,23 @@ var User = require('../../models/user.model')
 var actions = {
     addContactToUser: async function (value) {
         return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
-            .then(document => document)
-            .catch(error => error);
     },
 
     getUser: async function (id) {
         return await User.findById(id, 'name email image')
-            .then(document => document)
-            .catch(error => error);
     },
     getContactsOfUser: async function (id) {
         var user = await User.findById(id, '_id contacts')
-            .then(document => document)
-            .catch(error => error);
         //consultando contactos
         if (user) {
             return await User.find({ "_id": { "$in": user.contacts } }).select('_id name image')
-                .then(document => document)
-                .catch(error => error);
         }
     },
     getInfoForChat: async function (id) {
         return await User.findById(id, 'image name')
-            .then(document => document)
-            .catch(error => error);
     },
-    getChatsIdOfUser:async function (id) {
+    getChatsIdOfUser: async function (id) {
         return await User.findById(id, 'chats')
-            .then(document => document.chats)
-            .catch(error => error);
     },
     updateUser: updateUserById
 }
@@ -44,8 +32,6 @@ var actions = {
  */
 async function updateUserById(id, values) {
     return await User.findByIdAndUpdate(id, values)
-        .then(document => document)
-        .catch(error => error);
 }
 
 module.exports = actions;

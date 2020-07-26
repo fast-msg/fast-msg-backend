@@ -5,35 +5,36 @@ var router = express.Router();
 const multipart = require('connect-multiparty');
 var multiparMiddle = multipart({uploadDir:'uploads'})
 const controller = require('../controllers/users')
+var {catchErrors} = require('../middlewares/handleErrors');
 
 /**
  * Subir Imagen de perfil
  *  */ 
-router.post('/upload-image',multiparMiddle,controller.uploadImage);
+router.post('/upload-image',multiparMiddle,catchErrors(controller.uploadImage));
 
 /**
  * Información del usuario
  * Parámetros:
  *      id: del usuario
  */
-router.get('/',controller.getUser);
+router.get('/',catchErrors(controller.getUser));
 /**
  * Modificar info del usuario
  * Body: id,name,image,email
  */
-router.put('/',controller.editUser);
+router.put('/',catchErrors(controller.editUser));
 
 /**
  * Contactos del usuario
  * Parámetros:
  *      id: del usuario
  */
-router.get('/contacts',controller.getContacts);
+router.get('/contacts',catchErrors(controller.getContacts));
 /**
  * Agregar contactos al usuario
  * Parámetros:
  *      id: del usuario
  */
-router.put('/contacts/add',controller.addContact);
+router.put('/contacts/add',catchErrors(controller.addContact));
 
 module.exports = router;
