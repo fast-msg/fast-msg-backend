@@ -7,6 +7,14 @@ class DataError extends Error {
         this.status = status;
         this.message = message;
     }
+
+    toJson(){
+        return {
+            name:this.name,
+            status:this.status,
+            message:this.message
+        }
+    }
 }
 
 module.exports = DataError;

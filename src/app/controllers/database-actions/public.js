@@ -1,5 +1,6 @@
 'use strict'
-var User = require('../../models/user.model')
+var User = require('../../models/user.model');
+const AuthError = require('../../errors/auth-error');
 
 var actions = {
   addUser: async function (value) {
@@ -13,7 +14,7 @@ var actions = {
       return res;
     }
     else {
-      throw new Error('El correo electrónico ya está registrado');
+      throw new AuthError(400,'El correo electrónico ya está registrado');
     }
   },
   getUserByEmail: async function (email) {

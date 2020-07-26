@@ -1,10 +1,17 @@
 'use strict'
+var AuthError = require('../errors/auth-error')
+var DataError = require('../errors/data-error')
+
 function handleErrorsExpress(err, req, res, next) {
-    // logic
+    if(err.toJson){
+      res.status(err.status).json(err.toJson())  
+    }else {
     res.status(500).json({
-        error: 'Error',
-        message: err.message
+        error: 'UknownError',
+        message: 'UknownError',
+        status:500
     })
+    }
 }
 
 
@@ -13,6 +20,7 @@ function catchErrors(callback) {
         try {
             await callback(req,res);
         } catch (error) {
+
             next(error)
         }
     }
