@@ -6,20 +6,16 @@ var Message = require('../../models/message.model')
 var func_users = require('../database-actions/users')
 
 var actions = {
-  sayHelloo:function () {
-    console.log("hola")
-  },
+    sayHelloo: function () {
+        console.log("hola")
+    },
     addGroupChat: async function (value) {
         var chat = new GroupChat(value);
         let document = await chat.save()
-            .then(document => document)
-            .catch(error => error);
         //agregar chat a lista de cada usuario
         if (value && value.members) {
             value.members.forEach(element => {
                 func_users.updateUser(element, { $push: { 'chats': document._id } })
-                    .then(document => document)
-                    .catch(error => error);
             });
         }
         return document;
@@ -30,84 +26,57 @@ var actions = {
         value['name'] = info.name;
         var chat = new PrivateChat(value);
         let document = await chat.save()
-            .then(document => document)
-            .catch(error => error);
 
         //agregar chat a usuarios
         //from
         await func_users.updateUser(value.from, { $push: { 'chats': document._id } })
-            .then(document => document)
-            .catch(error => error);
         //to
         await func_users.updateUser(value.to, { $push: { 'chats': document._id } })
-            .then(document => document)
-            .catch(error => error);
         return document;
     },
     addLiveChat: async function (value) {
         var chat = new LiveChat(value);
         let document = await chat.save()
-            .then(document => document)
-            .catch(error => error);
         return document;
     },
     getChatsOfUser: async function (id_user) {
         var chatsIds = await func_users.getChatsIdOfUser(id_user);
         if (chatsIds) {
             let res = await PrivateChat.find({ "_id": { "$in": chatsIds } })
-                .select('_id name image ')
-                .then(document => document)
-                .catch(error => error);
             //chats grupales
             let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } })
                 .select('_id name image')
-                .then(document => document)
-                .catch(error => error);
             return res.concat(res2);
         }
     },
     getChat: async function (id_chat) {
         //buscar chat en privates
         let chat = await PrivateChat.findById(id_chat)
-            .then(document => document)
-            .catch(error => error);
         if (!chat) {
             chat = await GroupChat.findById(id_chat)
-                .then(document => document)
-                .catch(error => error);
         }
         return chat;
     },
 
-    addMesageChat:async function(owner,id_chat,content,date){
-      let chat = await PrivateChat.findById(id_chat)
-          .then(document => document)
-          .catch(error => error);
-      if (!chat) {
-          chat = await GroupChat.findById(id_chat)
-              .then(document => document)
-              .catch(error => error);
-      }
+    addMesageChat: async function (owner, id_chat, content, date) {
+        let chat = await PrivateChat.findById(id_chat)
+        if (!chat) {
+            chat = await GroupChat.findById(id_chat)
+        }
 
-      let msg = new Message({owner,content,date})
-      chat.messages.push(msg)
-      await chat.save()
-      .then(element=>element)
-      .catch(error=>error);
-      return msg;
+        let msg = new Message({ owner, content, date })
+        chat.messages.push(msg)
+        await chat.save()
+        return msg;
     },
-    getMembersOfChat:async function(id_chat){
-      let chat = await PrivateChat.findById(id_chat)
-          .then(document => document)
-          .catch(error => error);
-      if (chat) {
-        return [chat.from,chat.to];
-      }else{
-        chat = await GroupChat.findById(id_chat)
-            .then(document => document)
-            .catch(error => error);
+    getMembersOfChat: async function (id_chat) {
+        let chat = await PrivateChat.findById(id_chat)
+        if (chat) {
+            return [chat.from, chat.to];
+        } else {
+            chat = await GroupChat.findById(id_chat)
             return chat.members;
-      }
+        }
     }
 }
 

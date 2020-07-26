@@ -1,6 +1,7 @@
 'use strict'
 const express = require('express');
 var router = express.Router();
+var {catchErrors} = require('../middlewares/handleErrors');
 
 const controller = require('../controllers/chat')
 
@@ -9,13 +10,13 @@ const controller = require('../controllers/chat')
  * Parámetros:
  *      id: del usuario
  */
-router.get('/user',controller.getChats);
+router.get('/user',catchErrors(controller.getChats));
 
 /**
  * Obtiene un chat en particular
  * Parámetros:
  *      id: del chat
  */
-router.get('/',controller.getChatById);
+router.get('/',catchErrors(controller.getChatById));
 
 module.exports = router;
