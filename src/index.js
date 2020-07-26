@@ -7,32 +7,20 @@ const port = 8080;
 const options = { /* ... */ };
 const io = require('socket.io')(http, options);
 //mongoose
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fastMessages',
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useFindAndModify: false
-    });
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-    console.log("we are connected with db!")
-});
+const connectDb = require('./mongodb');
 //funciones del socket
-const socketActions = require('./socket-actions')
-//---------------------------------------------------------------------------------------
+const socketActions = require('./socket-actions');
 
+//---------------------------------------------------------------------------------------
 //configuración de sockets
 io.on('connection', (socket) => {
-  //registro obligatorio de los usuarios a la lista de conectados
-  socket.on('register', (userId) => {
-      socketActions.addUser(userId, socket.id);
-  });
-  //envio de mensajes
+    //registro obligatorio de los usuarios a la lista de conectados
+    socket.on('register', (userId) => {
+        socketActions.addUser(userId, socket.id);
+    });
+    //envio de mensajes
     socket.on('chat-message', (msg) => {
-        socketActions.newMessage(msg,socket,io);
+        socketActions.newMessage(msg, socket, io);
     });
 
     //broadcast para todos menos el que envió el mensaje
@@ -40,10 +28,21 @@ io.on('connection', (socket) => {
 });
 
 
+//---------------------------------------------------------------------------------------
+//config de la aplicación
+async function initApp() {
+    try {
+        //mongodb
+        await connectDb({host:'localhost',dbName:'fastMessages'});
+        //configuración de http
+        http.listen(port, () => {
+            console.log("Server listen on port 8080");
+        });
+    } catch (error) {
+        console.log(error)
+        process.exit(0)
+    }
+}
 
-//configuración de http
-http.listen(port, () => {
-    console.log("Server listen on port 8080");
-});
-
+initApp();
 module.exports = http;
