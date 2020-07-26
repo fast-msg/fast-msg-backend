@@ -5,14 +5,17 @@ var actions_user = require('../controllers/database-actions/users')
 var controller = {
     register: async function (req, res) {
         try {
-            var response = await actions.addUser(req.body);
-            if (response) {
-                res.status(200).send(response);
-            } else {
-                res.status(404).send();
-            }
+            var response = await actions.addUser(req.body)
+            .then(data=>{
+                console.log('data',data)
+                res.status(200).send(data);
+            })
+            .catch(error=>{
+                console.log('error',error)
+                res.status(404).send(error);
+            });
         } catch (e) {
-            console.log(e)
+            console.log("ERROR",e)
             res.status(500).send();
         }
     },
@@ -32,6 +35,7 @@ var controller = {
 
     },
     contact: async function (req, res) {
+        console.log(req.body)
         res.status(200).send();
     },
 }

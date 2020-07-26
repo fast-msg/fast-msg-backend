@@ -8,13 +8,13 @@ var actions = {
       user = new User(value);
       user.image ="image"; //imagen por defecto
       user.status = 3; //cuenta congelada
-      await user.save()
+      let res = await user.save()
         .then(document => document)
         .catch(error => error);
-      return {};
+      return res;
     }
     else {
-      throw Error('El correo electrónico ya está registrado');
+      return new Error('El correo electrónico ya está registrado');
     }
   },
   getUserByEmail: async function (email) {

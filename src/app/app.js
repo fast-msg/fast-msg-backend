@@ -29,5 +29,11 @@ app.use('/static', express.static(__dirname + '/uploads'));
 app.use('/user',routes_users);
 app.use('/chat',routes_chat);
 app.use('/public',routes_public);
-
+//manejo de errores
+app.use(function(err, req, res, next) {
+    // logic
+    console.error(err.stack);
+    next(err);
+  });
+  
 module.exports = app;
