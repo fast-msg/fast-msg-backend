@@ -6,9 +6,6 @@ var Message = require('../../models/message.model')
 var func_users = require('../database-actions/users')
 
 var actions = {
-    sayHelloo: function () {
-        console.log("hola")
-    },
     addGroupChat: async function (value) {
         var chat = new GroupChat(value);
         let document = await chat.save()
@@ -77,6 +74,9 @@ var actions = {
             chat = await GroupChat.findById(id_chat)
             return chat.members;
         }
+    },
+    getChatByFromTo:async function (values){
+      return await PrivateChat.findOne({from:values.from,to:values.to});
     }
 }
 

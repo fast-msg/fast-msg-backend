@@ -29,6 +29,13 @@ var controller = {
         } else {
             throw new DataError(404, 'Chat no encontrado')
         }
+    },
+    getOrCreateChat:async function (req,res){
+      var chat = await actions_chat.getChatByFromTo(req.body);
+      if(!chat){
+          chat = await actions_chat.addPrivateChat(req.body)
+      }
+      res.status(201).send(chat);
     }
 };
 

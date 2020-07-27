@@ -6,7 +6,7 @@ var AuthError = require('../errors/auth-error');
 var controller = {
     register: async function (req, res) {
             var response = await actions.addUser(req.body)
-            res.status(200).send(response);
+            res.status(200).send({message:'ok'});
     },
     login: async function (req, res) {
         let user = await actions.getUserByEmail(req.body.email);
@@ -15,10 +15,10 @@ var controller = {
                 let user_return = await actions_user.getUser(user[0]._id);
                 res.status(200).send(user_return);
             } else {
-                throw new AuthError(400,'contraseña incorrecta');
+                throw new AuthError(400,'La contraseña ingresada es incorrecta');
             }
         } else {
-            throw new AuthError(404,'El usuario no existe');
+            throw new AuthError(404,'El usuario no ha sido registrado en Fast Messages');
         }
     },
     contact: async function (req, res) {

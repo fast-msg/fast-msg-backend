@@ -14,7 +14,7 @@ var actions = {
       return res;
     }
     else {
-      throw new AuthError(400,'El correo electrónico ya está registrado');
+      throw new AuthError(400,'El correo electrónico ya está registrado en Fast Messages');
     }
   },
   getUserByEmail: async function (email) {
