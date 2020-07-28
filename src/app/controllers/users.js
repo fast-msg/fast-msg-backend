@@ -36,14 +36,14 @@ var controller = {
     },
     getUser: async (req, res) => {
         var id = req.query.id;
-          var response;
-        if(id){
-          response = await actions_users.getUser(id);
-          if (!response) {
-              throw new DataError(404, 'Usuario no encontrado')
-          }
-        }else{
-          response =  await actions_users.getAllUser();
+        var response;
+        if (id) {
+            response = await actions_users.getUser(id);
+            if (!response) {
+                throw new DataError(404, 'Usuario no encontrado')
+            }
+        } else {
+            response = await actions_users.getAllUser();
         }
         res.status(200).send(response);
     },
@@ -76,6 +76,26 @@ var controller = {
             res.status(200).send();
         } else {
             throw new DataError(404, 'Usuario no encontrado')
+        }
+    },
+
+    getUsersByEmail: async function (req, res) {
+        var mail = req.body.email
+        var response = await actions_users.getUserByEmail(mail);
+        if (response) {
+            res.status(201).send(response);
+        } else {
+            throw new Error("Algo salió mal al buscar")
+        }
+    },
+
+    getUsersByName: async function (req, res) {
+        var name = req.body.name
+        var response = await actions_users.getUserByName(name);
+        if (response) {
+            res.status(201).send(response);
+        } else {
+            throw new Error("Algo salió mal al buscar")
         }
     }
 };

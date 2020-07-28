@@ -6,6 +6,8 @@ function handleErrorsExpress(err, req, res, next) {
     if(err.toJson){
       res.status(err.status).json(err.toJson())  
     }else {
+        //log error
+        console.log(err)
     res.status(500).json({
         error: 'UknownError',
         message: 'UknownError',

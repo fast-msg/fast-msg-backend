@@ -25,7 +25,15 @@ var actions = {
     getAllUser: async function () {
         return await User.find({}).select('name email image')
     },
-    updateUser: updateUserById
+    updateUser: updateUserById,
+
+    getUserByEmail: async function (email) { 
+        return await User.find({email}).select('name email image')
+     },
+    getUserByName:async function (name) { 
+        return await User.find({name: new RegExp(name,'i')})
+        .select('name email image')
+     }
 }
 
 /**
