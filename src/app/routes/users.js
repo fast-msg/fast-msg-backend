@@ -44,12 +44,12 @@ router.put('/contacts/add',catchErrors(controller.addContact));
  * Obtiene los contactos segun el correo
  * Parametros en body: email
  */
-router.get('/contacts/email',catchErrors(controller.getUsersByEmail));
+router.post('/contacts/email',catchErrors(controller.getUsersByEmail));
 
 /**
  * obtiene los contactos segun el nombre
  * Parametros en body: name
  */
-router.get('/contacts/name',catchErrors(controller.getUsersByName));
+router.post('/contacts/name',catchErrors(controller.getUsersByName));
 
 module.exports = router;
