@@ -9,7 +9,7 @@ var controller = {
             res.status(200).send({message:'ok'});
     },
     login: async function (req, res) {
-        let user = await actions.getUserByEmail(req.body.email);
+        let user = await actions.getUserByEmailToLogin(req.body.email);
         if (user.length > 0) {
             if (user[0].password == req.body.password.toString()) {
                 let user_return = await actions_user.getUser(user[0]._id);
