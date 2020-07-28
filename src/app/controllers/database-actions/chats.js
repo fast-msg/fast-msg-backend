@@ -37,12 +37,11 @@ var actions = {
         return document;
     },
     getChatsOfUser: async function (id_user) {
-        var chatsIds = await func_users.getChatsIdOfUser(id_user);
-        if (chatsIds) {
-            let res = await PrivateChat.find({ "_id": { "$in": chatsIds } })
+        var userChat = await func_users.getChatsIdOfUser(id_user);
+        if (userChat) {
+            let res = await PrivateChat.find({ "_id": { "$in": userChat.chats } }).select('_id name image')
             //chats grupales
-            let res2 = await GroupChat.find({ "_id": { "$in": chatsIds } })
-                .select('_id name image')
+            let res2 = await GroupChat.find({ "_id": { "$in": userChat.chats } }).select('_id name image')
             return res.concat(res2);
         }
     },
@@ -76,7 +75,7 @@ var actions = {
         }
     },
     getChatByFromTo:async function (values){
-      return await PrivateChat.findOne({from:values.from,to:values.to});
+      return await PrivateChat.findOne({from:values.from,to:values.to}).select('name');
     }
 }
 

@@ -36,12 +36,16 @@ var controller = {
     },
     getUser: async (req, res) => {
         var id = req.query.id;
-        var response = await actions_users.getUser(id);
-        if (response) {
-            res.status(200).send(response);
-        } else {
-            throw new DataError(404, 'Usuario no encontrado')
+          var response;
+        if(id){
+          response = await actions_users.getUser(id);
+          if (!response) {
+              throw new DataError(404, 'Usuario no encontrado')
+          }
+        }else{
+          response =  await actions_users.getAllUser();
         }
+        res.status(200).send(response);
     },
     getContacts: async function (req, res) {
         var id = req.query.id;

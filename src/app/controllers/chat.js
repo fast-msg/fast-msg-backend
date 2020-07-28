@@ -35,7 +35,7 @@ var controller = {
       if(!chat){
           chat = await actions_chat.addPrivateChat(req.body)
       }
-      res.status(201).send(chat);
+      res.status(201).send({chatId:chat._id});
     }
 };
 

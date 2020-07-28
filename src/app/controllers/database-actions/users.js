@@ -22,6 +22,9 @@ var actions = {
     getChatsIdOfUser: async function (id) {
         return await User.findById(id, 'chats')
     },
+    getAllUser: async function () {
+        return await User.find({}).select('name email image')
+    },
     updateUser: updateUserById
 }
 
