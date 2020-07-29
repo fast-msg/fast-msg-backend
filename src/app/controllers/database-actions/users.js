@@ -5,7 +5,9 @@ var actions = {
     addContactToUser: async function (value) {
         return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
     },
-
+    delContactToUser: async function (value) {
+      return await updateUserById(value.idUser, { $pull: { 'contacts': value.idContact } })
+    },
     getUser: async function (id) {
         return await User.findById(id, 'name email image')
     },
@@ -27,10 +29,10 @@ var actions = {
     },
     updateUser: updateUserById,
 
-    getUserByEmail: async function (email) { 
+    getUserByEmail: async function (email) {
         return await User.find({email}).select('name email image')
      },
-    getUserByName:async function (name) { 
+    getUserByName:async function (name) {
         return await User.find({name: new RegExp(name,'i')})
         .select('name email image')
      }

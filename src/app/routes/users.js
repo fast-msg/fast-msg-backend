@@ -40,6 +40,14 @@ router.get('/contacts',catchErrors(controller.getContacts));
  */
 router.put('/contacts/add',catchErrors(controller.addContact));
 
+
+/**
+ * Agregar contactos al usuario
+ * Parámetros:
+ *      id: del usuario
+ */
+router.put('/contacts/del',catchErrors(controller.deleteContact));
+
 /**
  * Obtiene los contactos segun el correo
  * Parametros en body: email

@@ -56,18 +56,6 @@ var controller = {
             throw new DataError(404, 'Usuario no encontrado')
         }
     },
-
-    addContact: async function (req, res) {
-        var body = req.body;
-        console.log(body)
-        var response = await actions_users.addContactToUser(body);
-        if (response) {
-            res.status(200).send(response);
-        } else {
-            throw new DataError(404, 'Usuario no encontrado')
-        }
-    },
-
     editUser: async function (req, res) {
         var id = req.query.id
         var body = req.body;
@@ -78,7 +66,6 @@ var controller = {
             throw new DataError(404, 'Usuario no encontrado')
         }
     },
-
     getUsersByEmail: async function (req, res) {
         var mail = req.body.email
         var response = await actions_users.getUserByEmail(mail);
@@ -88,7 +75,6 @@ var controller = {
             throw new Error("Algo salió mal al buscar")
         }
     },
-
     getUsersByName: async function (req, res) {
         var name = req.body.name
         var response = await actions_users.getUserByName(name);
@@ -97,7 +83,26 @@ var controller = {
         } else {
             throw new Error("Algo salió mal al buscar")
         }
+    },
+        addContact: async function (req, res) {
+            var body = req.body;
+            var response = await actions_users.addContactToUser(body);
+            if (response) {
+                res.status(200).send({message:'ok'});
+            } else {
+                throw new DataError(404, 'Usuario no encontrado')
+            }
+        },
+    deleteContact:async function (req,res) {
+      var body = req.body;
+      var response = await actions_users.delContactToUser(body);
+      if (response) {
+          res.status(200).send({message:'ok'});
+      } else {
+          throw new DataError(404, 'Usuario no encontrado')
+      }
     }
+
 };
 
 module.exports = controller;
