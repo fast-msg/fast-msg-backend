@@ -11,8 +11,9 @@ var controller = {
             throw new DataError(404, 'Usuario no encontrado')
         }
     },
+
     getChats: async function (req, res) {
-        var id = req.query.id;
+        var id = req.user;
         var response = await actions_chat.getChatsOfUser(id);
         if (response) {
             res.status(200).send(response);
@@ -21,9 +22,8 @@ var controller = {
         }
     },
     getChatById: async function (req, res) {
-
-        var id = req.query.id;
-        var response = await actions_chat.getChat(id);
+        var id_chat = req.query.id;
+        var response = await actions_chat.getChat(id_chat);
         if (response) {
             res.status(200).send(response);
         } else {
@@ -31,9 +31,10 @@ var controller = {
         }
     },
     getOrCreateChat:async function (req,res){
-      var chat = await actions_chat.getChatByFromTo(req.body);
+      var from = req.user;
+      var chat = await actions_chat.getChatByFromTo(from,req.body);
       if(!chat){
-          chat = await actions_chat.addPrivateChat(req.body)
+          chat = await actions_chat.addPrivateChat(from,req.body)
       }
       res.status(201).send({chatId:chat._id});
     }

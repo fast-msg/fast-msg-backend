@@ -17,10 +17,11 @@ var actions = {
         }
         return document;
     },
-    addPrivateChat: async function (value) {
+    addPrivateChat: async function (from,value) {
         var info = await func_users.getInfoForChat(value.to);
         value['image'] = info.image;
         value['name'] = info.name;
+        value['from'] = from;
         var chat = new PrivateChat(value);
         let document = await chat.save()
 
@@ -74,8 +75,8 @@ var actions = {
             return chat.members;
         }
     },
-    getChatByFromTo:async function (values){
-      return await PrivateChat.findOne({from:values.from,to:values.to}).select('name');
+    getChatByFromTo:async function (from,values){
+      return await PrivateChat.findOne({from,to:values.to}).select('name');
     }
 }
 
