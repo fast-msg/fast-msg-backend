@@ -76,31 +76,31 @@ var controller = {
         }
     },
     getUsersByName: async function (req, res) {
-        var name = req.body.name
-        var response = await actions_users.getUserByName(name);
+       var body = req.body;
+         var response = await actions_users.getUserByName(body.id,body.name);
         if (response) {
             res.status(201).send(response);
         } else {
             throw new Error("Algo salió mal al buscar")
         }
     },
-        addContact: async function (req, res) {
-            var body = req.body;
-            var response = await actions_users.addContactToUser(body);
-            if (response) {
-                res.status(200).send({message:'ok'});
-            } else {
-                throw new DataError(404, 'Usuario no encontrado')
-            }
-        },
-    deleteContact:async function (req,res) {
-      var body = req.body;
-      var response = await actions_users.delContactToUser(body);
-      if (response) {
-          res.status(200).send({message:'ok'});
-      } else {
-          throw new DataError(404, 'Usuario no encontrado')
-      }
+    addContact: async function (req, res) {
+        var body = req.body;
+        var response = await actions_users.addContactToUser(body);
+        if (response) {
+            res.status(200).send({ message: 'ok' });
+        } else {
+            throw new DataError(404, 'Usuario no encontrado')
+        }
+    },
+    deleteContact: async function (req, res) {
+        var body = req.body;
+        var response = await actions_users.delContactToUser(body);
+        if (response) {
+            res.status(200).send({ message: 'ok' });
+        } else {
+            throw new DataError(404, 'Usuario no encontrado')
+        }
     }
 
 };

@@ -6,7 +6,7 @@ var actions = {
         return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
     },
     delContactToUser: async function (value) {
-      return await updateUserById(value.idUser, { $pull: { 'contacts': value.idContact } })
+        return await updateUserById(value.idUser, { $pull: { 'contacts': value.idContact } })
     },
     getUser: async function (id) {
         return await User.findById(id, 'name email image')
@@ -30,12 +30,17 @@ var actions = {
     updateUser: updateUserById,
 
     getUserByEmail: async function (email) {
-        return await User.find({email}).select('name email image')
-     },
-    getUserByName:async function (name) {
-        return await User.find({name: new RegExp(name,'i')})
+        return await User.find({ email }).select('name email image')
+    },
+    getUserByName: async function (id, name) {
+        var user = await User.findById(id, 'contacts')    
+        var list = await User.find({
+            $and: [{ name: new RegExp(name, 'i') },
+            { _id: { $ne: user._id } }, { _id: { $nin: user.contacts } }]
+        })
         .select('name email image')
-     }
+        return list;
+    }
 }
 
 /**
