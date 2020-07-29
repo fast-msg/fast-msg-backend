@@ -2,11 +2,11 @@
 var User = require('../../models/user.model')
 
 var actions = {
-    addContactToUser: async function (value) {
-        return await updateUserById(value.idUser, { $push: { 'contacts': value.idContact } })
+    addContactToUser: async function (id,value) {
+        return await updateUserById(id, { $push: { 'contacts': value.idContact } })
     },
-    delContactToUser: async function (value) {
-        return await updateUserById(value.idUser, { $pull: { 'contacts': value.idContact } })
+    delContactToUser: async function (id,value) {
+        return await updateUserById(id, { $pull: { 'contacts': value.idContact } })
     },
     getUser: async function (id) {
         return await User.findById(id, 'name email image')

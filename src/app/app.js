@@ -2,16 +2,17 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var {handleErrorsExpress} = require('./middlewares/handleErrors');
 var settings = require('../../settings')
+//middlewares
+var {handleErrorsExpress} = require('./middlewares/handleErrors');
+const Authentication = require('./middlewares/handleJWT');
 
 //archivos de rutas 
 var routes_chat = require('./routes/chat')
 var routes_users = require('./routes/users')
 var routes_public = require('./routes/public');
-const Authentication = require('./middlewares/handleJWT');
 
-//middlewares
+//middlewares de bodyparser
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 

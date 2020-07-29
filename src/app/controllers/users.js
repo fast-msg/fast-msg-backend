@@ -4,7 +4,7 @@ var DataError = require('../errors/data-error');
 
 var controller = {
     uploadImage: async function (req, res) {
-        var id = req.query.id;
+        var id = req.user;
         if (req.files) {
             var filePath = req.files.image.path;
             var fileSplit = filePath.split('/');
@@ -35,7 +35,7 @@ var controller = {
         }
     },
     getUser: async (req, res) => {
-        var id = req.query.id;
+        var id = req.user;
         var response;
         if (id) {
             response = await actions_users.getUser(id);
@@ -48,7 +48,7 @@ var controller = {
         res.status(200).send(response);
     },
     getContacts: async function (req, res) {
-        var id = req.query.id;
+        var id = req.user;
         var response = await actions_users.getContactsOfUser(id);
         if (response) {
             res.status(200).send(response);
@@ -57,7 +57,7 @@ var controller = {
         }
     },
     editUser: async function (req, res) {
-        var id = req.query.id
+        var id = req.user
         var body = req.body;
         var response = await actions_users.updateUser(id, body);
         if (response) {
@@ -85,8 +85,7 @@ var controller = {
         }
     },
     addContact: async function (req, res) {
-        var body = req.body;
-        var response = await actions_users.addContactToUser(body);
+        var response = await actions_users.addContactToUser(req.user,req.body);
         if (response) {
             res.status(200).send({ message: 'ok' });
         } else {
@@ -94,8 +93,7 @@ var controller = {
         }
     },
     deleteContact: async function (req, res) {
-        var body = req.body;
-        var response = await actions_users.delContactToUser(body);
+        var response = await actions_users.delContactToUser(req.user,req.body);
         if (response) {
             res.status(200).send({ message: 'ok' });
         } else {

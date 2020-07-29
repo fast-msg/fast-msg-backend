@@ -28,8 +28,6 @@ router.put('/',catchErrors(controller.editUser));
 
 /**
  * Contactos del usuario
- * Parámetros:
- *      id: del usuario
  */
 router.get('/contacts',catchErrors(controller.getContacts));
 
