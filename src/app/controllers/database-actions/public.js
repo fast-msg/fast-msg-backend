@@ -1,7 +1,6 @@
 'use strict'
 var User = require('../../models/user.model');
 const AuthError = require('../../errors/auth-error');
-const { createToken } = require('../../services/auth');
 
 
 var actions = {
@@ -17,7 +16,7 @@ var actions = {
       user.status = 3; //cuenta congelada
       //generar hash y asignar a cuentas por confirmar
       let res = await user.save()
-      return createToken(res);
+      return res;
     }
     else {
       throw new AuthError(400,'El correo electrónico ya está registrado en Fast Messages');
