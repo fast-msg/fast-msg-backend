@@ -1,8 +1,8 @@
 'use strict'
+const settings = require('../settings')
 const app = require('./app/app');
 //http
 const http = require('http').Server(app);
-const port = 8080;
 //socket.io
 const options = { /* ... */ };
 const io = require('socket.io')(http, options);
@@ -30,10 +30,10 @@ io.on('connection', (socket) => {
 
 //---------------------------------------------------------------------------------------
 //config de la aplicación
-async function initApp() {
+async function initApp(port,dbConfig) {
     try {
         //mongodb
-        await connectDb({host:'localhost',dbName:'fastMessages'});
+        await connectDb(dbConfig);
         //configuración de http
         http.listen(port, () => {
             console.log("Server listen on port 8080");
@@ -44,5 +44,5 @@ async function initApp() {
     }
 }
 
-initApp();
+initApp(settings.port,settings.dbConfig);
 module.exports = http;
