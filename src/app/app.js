@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var {handleErrorsExpress} = require('./middlewares/handleErrors');
-
+var settings = require('../../settings')
 //archivos de rutas 
 var routes_chat = require('./routes/chat')
 var routes_users = require('./routes/users')
@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 //cors
-
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -23,8 +22,9 @@ app.use((req, res, next) => {
     next();
 });
 
+
 //servicio de archivos estaticos 
-app.use('/static', express.static(__dirname + '/uploads'));
+app.use('/images',express.static(settings.path+'/uploads'));
 
 //rutas
 app.use('/user',routes_users);
