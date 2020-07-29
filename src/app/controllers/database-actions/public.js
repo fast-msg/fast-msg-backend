@@ -7,7 +7,11 @@ var actions = {
     let user = await User.find({ email: value.email }).exec();
     if (user.length == 0) {
       user = new User(value);
-      user.image ="image"; //imagen por defecto
+      if(user.gender == 1) {
+        user.image ="user-man.svg"; //imagen por defecto
+      }else{
+        user.image ="user-woman.svg"; //imagen por defecto
+      }
       user.status = 3; //cuenta congelada
       //generar hash y asignar a cuentas por confirmar
       let res = await user.save()
