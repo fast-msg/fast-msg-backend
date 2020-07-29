@@ -6,7 +6,7 @@ var AuthError = require('../errors/auth-error');
 var controller = {
     register: async function (req, res) {
             var response = await actions.addUser(req.body)
-            res.status(200).send({message:'ok'});
+            res.status(200).send({token:response});
     },
     login: async function (req, res) {
         let user = await actions.getUserByEmailToLogin(req.body.email);
