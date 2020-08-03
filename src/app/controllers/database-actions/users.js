@@ -33,13 +33,17 @@ var actions = {
         return await User.find({ email }).select('name email image')
     },
     getUserByName: async function (id, name) {
-        var user = await User.findById(id, 'contacts')    
+        var user = await User.findById(id, 'contacts')
         var list = await User.find({
             $and: [{ name: new RegExp(name, 'i') },
             { _id: { $ne: user._id } }, { _id: { $nin: user.contacts } }]
         })
         .select('name email image')
         return list;
+    },
+
+    deleteChatUser:async function(id_chat,id_user){
+      return await updateUserById(id_user, { $pull: { 'chats': id_chat } })
     }
 }
 

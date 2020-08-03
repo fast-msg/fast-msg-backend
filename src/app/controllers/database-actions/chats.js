@@ -77,6 +77,17 @@ var actions = {
     },
     getChatByFromTo:async function (from,values){
       return await PrivateChat.findOne({from,to:values.to}).select('name');
+    },
+    deleteChatUser:async function(id_chat,id_user){
+          return await func_users.deleteChatUser(id_chat,id_user);
+    },
+    emptyChat:async function(id_chat){
+      //buscar chat en privates
+      /*let chat = return await User.findByIdAndUpdate(id, values)
+      if (!chat) {
+          chat = await GroupChat.findById(id_chat)
+      }
+      return chat;*/
     }
 }
 

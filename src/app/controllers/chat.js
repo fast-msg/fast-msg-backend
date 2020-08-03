@@ -37,6 +37,22 @@ var controller = {
           chat = await actions_chat.addPrivateChat(from,req.body)
       }
       res.status(201).send({chatId:chat._id});
+    },
+    deleteChatUser:async function(req,res){
+      var id=req.user;
+      var chatId = req.query.id;
+      await actions_chat.deleteChatUser(chatId,id)
+      .then(response=>{
+        res.status(201).send({message:'ok'});
+      })
+      .catch(err=>{
+        res.status(401).send({message:err.message});
+      });
+    },
+    emptyChat:async function(req,res){
+      var chatId = req.query.id;
+      await actions_chat.emptyChat(chatId);
+      res.status(201).send({message:'ok'});
     }
 };
 

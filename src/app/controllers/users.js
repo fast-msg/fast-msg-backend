@@ -77,7 +77,7 @@ var controller = {
     },
     getUsersByName: async function (req, res) {
        var body = req.body;
-         var response = await actions_users.getUserByName(body.id,body.name);
+         var response = await actions_users.getUserByName(req.user,body.name);
         if (response) {
             res.status(201).send(response);
         } else {
