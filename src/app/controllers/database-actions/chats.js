@@ -6,6 +6,9 @@ var Message = require('../../models/message.model')
 var func_users = require('../database-actions/users')
 
 var actions = {
+    addChatToUser:async function (chat_id,user_id){
+      return func_users.addChatToUser(chat_id,user_id);
+    },
     addGroupChat: async function (value) {
         var chat = new GroupChat(value);
         let document = await chat.save()

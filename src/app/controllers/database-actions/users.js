@@ -2,6 +2,9 @@
 var User = require('../../models/user.model')
 
 var actions = {
+    addChatToUser: async function (chat_id,user_id) {
+        return await updateUserById(user_id,{$addToSet: { 'chats': chat_id } })
+    },
     addContactToUser: async function (id,value) {
         return await updateUserById(id, { $push: { 'contacts': value.idContact } })
     },
