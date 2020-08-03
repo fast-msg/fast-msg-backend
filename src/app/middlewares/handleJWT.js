@@ -5,7 +5,7 @@ function Authentication(req, res, next) {
     if (!req.headers.authorization) {
         return res.status(403).send({ message: 'No puede acceder al recurso' })
     }
-    var token = req.headers.authorization;
+    var token = req.headers.authorization.split(' ')[1];
     decodeToken(token)
         .then(payload => {
             req.user = payload.sub;

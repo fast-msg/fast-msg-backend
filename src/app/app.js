@@ -5,9 +5,8 @@ var bodyParser = require('body-parser');
 var settings = require('../../settings')
 //middlewares
 var {handleErrorsExpress} = require('./middlewares/handleErrors');
-const Authentication = require('./middlewares/handleJWT');
 
-//archivos de rutas 
+//archivos de rutas
 var routes_chat = require('./routes/chat')
 var routes_users = require('./routes/users')
 var routes_public = require('./routes/public');
@@ -26,15 +25,15 @@ app.use((req, res, next) => {
 });
 
 
-//servicio de archivos estaticos 
+//servicio de archivos estaticos
 app.use('/images',express.static(settings.path+'/uploads'));
 
 //rutas
-app.use('/user',Authentication,routes_users);
-app.use('/chat',Authentication,routes_chat);
+app.use('/user',routes_users);
+app.use('/chat',routes_chat);
 app.use('/public',routes_public);
 
 //manejo de errores
 app.use(handleErrorsExpress);
-  
+
 module.exports = app;
