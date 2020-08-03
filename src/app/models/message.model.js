@@ -5,7 +5,8 @@ const schema = mongoose.Schema;
 var Schema = schema({
     content: String,
     date: Date,
-    owner:String
+    owner:String,
+    canSee:[String]
 });  
 
 Schema.virtual('id').get(function() { return this._id; });

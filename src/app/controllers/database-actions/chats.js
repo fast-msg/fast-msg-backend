@@ -56,15 +56,26 @@ var actions = {
     },
 
     addMesageChat: async function (owner, id_chat, content, date) {
+      //chat privado
         let chat = await PrivateChat.findById(id_chat)
-        if (!chat) {
+        let msg;
+        if (chat) {
+          msg = new Message({ owner, content, date,canSee:[chat.from,chat.to] })
+        }else {
+          //chat grupal
             chat = await GroupChat.findById(id_chat)
-        }
+            if(chat){
+              msg = new Message({ owner, content, date,canSee:chat.members })
+            }else {
 
-        let msg = new Message({ owner, content, date })
-        chat.messages.push(msg)
-        await chat.save()
-        return msg;
+            }
+        }
+        if(msg){
+          chat.messages.push(msg)
+          await chat.save()
+          return msg;
+        }
+        return null;
     },
     getMembersOfChat: async function (id_chat) {
         let chat = await PrivateChat.findById(id_chat)
