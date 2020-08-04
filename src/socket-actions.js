@@ -10,8 +10,7 @@ var functions = {
       members.forEach((item, i) => {
         var user = users.find((value) => value.id === item.toString());
          if (user) {
-            io.emit('chat-message', Object.assign({chat:msg.chatId,message:savedMessage}));
-             //io.to(user.socketId).emit('chat-message', savedMessage);
+             io.to(user.socketId).emit('chat-message', {chat:msg.chatId,message:savedMessage});
          }
       });
     }
