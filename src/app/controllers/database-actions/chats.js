@@ -49,9 +49,18 @@ var actions = {
             return res.concat(res2);
         }
     },
-    getChat: async function (id_chat) {
+    getChat: async function (id_chat,user_id) {
         //buscar chat en privates
         let chat = await PrivateChat.findById(id_chat)
+        let messages = []
+        //filtrar mensajes
+        chat.messages.forEach(element => {
+          if(element.canSee.includes(user_id)){
+            messages.push(element)
+          }
+        });
+        //asignando mensajes
+        chat.messages = messages;
         if (!chat) {
             chat = await GroupChat.findById(id_chat)
         }
@@ -93,7 +102,16 @@ var actions = {
       return await PrivateChat.findOne({from,to:values.to}).select('name');
     },
     deleteChatUser:async function(id_chat,id_user){
-          return await func_users.deleteChatUser(id_chat,id_user);
+      //eliminando de lista de usuario
+      await func_users.deleteChatUser(id_chat,id_user);
+      //actualizando canSee de mensajes
+      let chat = await PrivateChat.findById(id_chat);
+      if(chat){
+          chat.messages.forEach((item, i) => {
+            //eliminar id de usuario de canSee
+          });
+
+      }
     },
     emptyChat:async function(id_chat){
       //buscar chat en privates

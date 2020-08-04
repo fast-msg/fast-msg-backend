@@ -1,4 +1,5 @@
 var actions_chat = require('./database-actions/chats');
+var DataError = require('../errors/data-error');
 
 var controller = {
     addGroupChat: async function (req, res) {
@@ -23,7 +24,7 @@ var controller = {
     },
     getChatById: async function (req, res) {
         var id_chat = req.query.id;
-        var response = await actions_chat.getChat(id_chat);
+        var response = await actions_chat.getChat(id_chat,req.user);
         if (response) {
             res.status(200).send(response);
         } else {
