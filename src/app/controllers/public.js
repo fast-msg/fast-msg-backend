@@ -2,11 +2,13 @@
 var actions = require('../controllers/database-actions/public')
 var actions_user = require('../controllers/database-actions/users')
 const { createToken } = require('../services/handleTokens');
+const {sendConfirmMail} = require('../services/nodemailer')
 var AuthError = require('../errors/auth-error');
 
 var controller = {
     register: async function (req, res) {
             var response = await actions.addUser(req.body)
+            //await sendConfirmMail('garciam.emm@gmail.com','sdcefefwefewf')
             res.status(200).send({token:createToken(response)});
     },
     login: async function (req, res) {
