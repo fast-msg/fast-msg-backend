@@ -56,7 +56,7 @@ var controller = {
     },
     emptyChat:async function(req,res){
       var chatId = req.query.id;
-      await actions_chat.emptyChat(chatId);
+      await actions_chat.emptyChat(chatId,req.user);
       res.status(201).send({message:'ok'});
     }
 };

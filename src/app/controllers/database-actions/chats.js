@@ -3,6 +3,8 @@ var PrivateChat = require('../../models/chats/private-chat.model')
 var GroupChat = require('../../models/chats/group-chat.model')
 var LiveChat = require('../../models/chats/live-chat.model')
 var Message = require('../../models/message.model')
+var DataError = require('../../errors/data-error');
+
 var func_users = require('../database-actions/users')
 
 var actions = {
@@ -79,7 +81,7 @@ var actions = {
             if(chat){
               msg = new Message({ owner, content, date,canSee:chat.members })
             }else {
-
+                throw new DataError(404,'La conversación no existe')
             }
         }
         if(msg){
@@ -105,21 +107,12 @@ var actions = {
       //eliminando de lista de usuario
       await func_users.deleteChatUser(id_chat,id_user);
       //actualizando canSee de mensajes
-      let chat = await PrivateChat.findById(id_chat);
-      if(chat){
-          chat.messages.forEach((item, i) => {
-            //eliminar id de usuario de canSee
-          });
-
-      }
+      await PrivateChat.findByIdAndUpdate(id_chat,
+        {messages:{ $pull: { 'canSee': id_user } }});
     },
-    emptyChat:async function(id_chat){
-      //buscar chat en privates
-      /*let chat = return await User.findByIdAndUpdate(id, values)
-      if (!chat) {
-          chat = await GroupChat.findById(id_chat)
-      }
-      return chat;*/
+    emptyChat:async function(id_chat,id_user){
+      await PrivateChat.findByIdAndUpdate(id_chat,
+        {messages:{ $pull: { 'canSee': id_user } }})
     }
 }
 
