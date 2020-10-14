@@ -33,10 +33,10 @@ io.on('connection', (socket) => {
 async function initApp(port,dbConfig) {
     try {
         //mongodb
-        await connectDb(dbConfig);
+        //await connectDb(dbConfig);
         //configuración de http
         http.listen(port, () => {
-            console.log("Server listen on port 8080");
+            console.log("Server listen on port "+port);
         });
     } catch (error) {
         console.log(error)
