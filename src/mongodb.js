@@ -6,7 +6,8 @@ db.once('open', ()=> {
 });
 
 async function connectDb(configdb){
-    await mongoose.connect(`mongodb://${configdb.host}/${configdb.dbName}`,
+    await mongoose.connect(configdb.connectionString,
+        //`mongodb://${configdb.host}/${configdb.dbName}`,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
